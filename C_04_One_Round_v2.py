@@ -1,5 +1,7 @@
 import random
 
+from C_06_Game_Loop_v2 import round_feedback
+
 
 def initial_points(which_player):
     """ROll dice twice and return total / if double points apply"""
@@ -18,6 +20,13 @@ def initial_points(which_player):
 
     return total, double
 
+
+def make_statement(statement, decoration):
+    """Add emoji / additional characters to the start and end of headings"""
+
+    ends = decoration * 3
+    print(f"\n{ends} {statement} {ends}")
+
 # Main starts here...
 
 # Roll the dice for the user and note if they got a double
@@ -33,7 +42,7 @@ double_user =  initial_user[1]
 
 # Let the user know if they qualify for double points
 if double_user == "yes":
-    print("Beautiful, wonderful news! - if you win I shall grant you double your points! ^^")
+    print("Wonderful news! - if you win I shall grant you double points! ^^")
 
 
 # Assume user goes first...
@@ -47,7 +56,7 @@ player_2_points = comp_points
 if user_points < comp_points:
     print("You start because your initial roll was less than the computer\n")
 
-#If the user and computer roll equal points, the users is player 1...
+#If the user and computer roll equal points users is player 1...
 elif user_points == comp_points:
     print("The initial rolls are the same, the user starts!")
 
@@ -61,7 +70,7 @@ while player_1_points < 13 and player_2_points < 13:
     print()
     input("Press <enter> to continue this round\n")
 
-    # first person rolls the dies and score is updtaed
+    # first person rolls the dies and score is updated
     player_1_roll = random.randint( 1, 6 )
     player_1_points += player_1_roll
 
@@ -73,10 +82,36 @@ while player_1_points < 13 and player_2_points < 13:
         break
 
     # Second person rolls the die (and score is updated)
-    player_2_points = random.randint( 1, 6 )
+    player_2_roll = random.randint( 1, 6 )
     player_2_points += player_2_roll
 
     print(f'{second}: Rolled a {player_2_roll} - has {player_2_points} points')
+
     print(f'{first}: {player_1_points} | {second} {player_2_points}')
 
-print("End of the Round!")
+#end of round
+
+# associate player points with either the user or the computer
+user_points = player_1_points
+comp_points = player_2_points
+
+if first == "Computer":
+    user_points, comp_points = comp_points, user_points
+
+# Work out who won...
+if user_points > comp_points:
+    winner = "user"
+else:
+    winner = "computer"
+
+round_feedback = f"The {winner} won!"
+
+#  double user points if eligible
+if winner == "user" and double_user == "yes":
+    user_points = user_points * 2
+
+# Output round results
+make_statement("Round Results","=")
+print(f"user Points: {user_points} | computer points: {comp_points}")
+print(round_feedback)
+print("")
