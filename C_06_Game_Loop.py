@@ -17,6 +17,7 @@ while comp_score < game_goal and user_score < game_goal:
     user_score += user_points
 
     #Show overall scores (add this to rounds loop)
+    print()
     print("*** Game Update ***") #replace with call to statement generator
     print(f"User Score: {user_score} | Comp Score: {comp_score}")
 
