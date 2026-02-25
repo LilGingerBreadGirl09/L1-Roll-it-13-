@@ -75,6 +75,8 @@ comp_score = 0
 user_score = 0
 rounds_played = 0
 
+game_history = []
+
 make_statement("Welcome to the Roll It 13 Game!", "🍀")
 print()
 
@@ -187,27 +189,42 @@ while comp_score < game_goal and user_score < game_goal:
     comp_score += comp_points
     user_score += user_points
 
+    # Generate round results and ad it to the game history list
+    game_results = (f"Round {rounds_played}: User points {user_points} | "
+                    f"Computer points {comp_points}, {winner} wins "
+                    f"({user_score}|{comp_score})")
+
+    game_history.append(game_results)
+
+
     #Show overall scores (add this to rounds loop)
     print()
     print("*** Game Update ***") #replace with call to statement generator
     print(f"User Score: {user_score} | Comp Score: {comp_score}")
 
-#end of entire game, output final results
+##end of entire game, output final results
 
 make_statement("Game Over! :(", "🏁")
 
 print()
 if user_score > comp_score:
-    print("The User has Won!")   # Replace this with statement generator call
+    make_statement("The User WONNNN!", "👥🎊")
 else:
-    print("The Computer has Won!")
+    make_statement("The Computer WONNNN!", "🖥️🎊")
+
+
+print()
+make_statement("Game History", "🎲")
+
+for item in game_history:
+    print(item)
 
     # associate player points with either the user or the computer
     user_points = player_1_points
     comp_points = player_2_points
 
     # switch the user and computer points if the computer went first
-    if first =="computer":
+    if first == "computer":
         user_points, comp_points = comp_score, user_points
 
     # Work out who won and set the loser's points to zero
