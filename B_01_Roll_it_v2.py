@@ -1,5 +1,48 @@
 import random
 
+def yes_no(question):
+    """ Checks if user enters yes / no """
+    while True:
+
+        response = input(question).lower()
+
+        #check the user says yes / no / y / n
+        if response == "yes" or response == "y":
+           return "yes"
+
+        elif response == "no" or response == "n":
+            return "no"
+
+        else:
+            print("Please enter Yes or No >:[")
+
+def instructions():
+    """ prints instructions """
+
+    print("""
+*** Instructions ***
+
+Roll the Dice and try again!
+""")
+
+def int_check():
+    """Checks users enter an integer more than / equal to 13"""
+
+    error = "Please enter an integer more than / equal to 13. >:["
+
+    while True:
+        try:
+            response = int(input("What is the game goal?"))
+
+            if response < 13:
+                print(error)
+
+            else:
+               return response
+
+        except ValueError:
+            print(error)
+
 def initial_points(which_player):
     """ROll dice twice and return total / if double points apply"""
 
@@ -17,6 +60,7 @@ def initial_points(which_player):
 
     return total, double
 
+
 def make_statement(statement, decoration):
     """Add emoji / additional characters to the start and end of headings"""
 
@@ -31,7 +75,18 @@ comp_score = 0
 user_score = 0
 rounds_played = 0
 
-game_goal = int(input("Game Goal: "))      #Should be a function call!
+make_statement("Welcome to the Roll It 13 Game!", "🍀")
+print()
+
+# ask the user if they want instructions (check is they say yes / no)
+want_instructions = yes_no ("Do you want to see instructions? ")
+
+# Display the instructions if the user wants to see them...
+if want_instructions == "yes":
+    instructions()
+
+print()
+game_goal = int_check()
 
 # Play multiple rounds until a winner has been found
 while comp_score < game_goal and user_score < game_goal:
@@ -98,7 +153,8 @@ while comp_score < game_goal and user_score < game_goal:
 
         print(f'{first}: {player_1_points} | {second} {player_2_points}')
 
-    print("End of the Round!")
+    print()
+    print("End of the Round! ")
 
     user_points = player_1_points
     comp_points = player_2_points
